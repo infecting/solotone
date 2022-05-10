@@ -13,9 +13,7 @@ interface playerInfo {
 export default function Player({ bpm, data, loopEnd, intro }: playerInfo) {
   const [isSSR, setIsSSR] = useState(true);
   const [currentSection, setCurrentSection] = useState(0);
-  useEffect(() => {
-    setIsSSR(false);
-  }, []);
+  const [fileLength, setFileLength] = useState(0);
   const [chord, setChord] = useState("");
   bpm = (60000 / bpm) * 0.001 * loopEnd;
   function getChord(seconds: number) {
@@ -49,16 +47,21 @@ export default function Player({ bpm, data, loopEnd, intro }: playerInfo) {
       console.error(e);
     }
   }
+
+  function handleLoadMetadata(e: any) {
+    setFileLength(Math.floor(e.target.duration));
+    console.log(e.target.duration);
+  }
+
   return (
     <div>
-      {isSSR ? null : (
-        <ReactAudioPlayer
-          listenInterval={0.001}
-          onListen={(p) => getChord(p)}
-          controls
-          src={"/backing_one.mp4"}
-        />
-      )}
+      <ReactAudioPlayer
+        listenInterval={0.001}
+        onListen={(p) => getChord(p)}
+        controls
+        onLoadedMetadata={(e) => handleLoadMetadata(e)}
+        src={"/backing_one.mp4"}
+      />
       <p>Current Chord: {chord}</p>
       <p>Notes in chord: {Chord.get(chord).notes}</p>
     </div>

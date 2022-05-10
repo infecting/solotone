@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { ChordType, Chord } from "@tonaljs/tonal";
 import { useState } from "react";
 import Player from "../components/Player";
-import { ChordData, TrackData } from "../types";
+import { TrackData } from "../types";
 
 const Home: NextPage = () => {
   const [bpm, setBpm] = useState(100);
@@ -51,6 +51,19 @@ const Home: NextPage = () => {
     }
   }
 
+  function duplicateSection() {
+    let tmp = [...trackData];
+    tmp.push(tmp[currentSection]);
+    setTrackData(tmp);
+  }
+
+  function deleteSection() {
+    let tmp = [...trackData];
+    tmp.splice(currentSection, 1);
+    setTrackData(tmp);
+    setCurrentSection(currentSection - 1);
+  }
+
   function deleteEntry(i: number) {
     let tmp = [...trackData];
     tmp[currentSection].chords.splice(i, 1);
@@ -89,10 +102,10 @@ const Home: NextPage = () => {
         onChange={(e) => setIntro(parseFloat(e.target.value))}
       />
       <br />
-      <select name="" id="" onChange={(e) => chordify(e)}>
+      <select className="appearance-none" id="" onChange={(e) => chordify(e)}>
         {notes.map((note) =>
           chords.map((chord) => (
-            <option value={note + chord.aliases[0]}>
+            <option key={chord.aliases[0]} value={note + chord.aliases[0]}>
               {note + chord.aliases[0]}
             </option>
           ))
@@ -101,10 +114,19 @@ const Home: NextPage = () => {
       <button onClick={() => addSection()}>Add Section</button>
       <div>
         {trackData.map((_x, i) => (
-          <button onClick={() => setCurrentSection(i)}>{i + 1}</button>
+          <button
+            disabled={currentSection == i}
+            onClick={() => setCurrentSection(i)}
+          >
+            {i + 1}
+          </button>
         ))}
       </div>
       <div>
+        <button onClick={() => duplicateSection()}>Duplicate</button>
+        {currentSection === 0 ? null : (
+          <button onClick={() => deleteSection()}>Delete Section</button>
+        )}
         {trackData[currentSection].chords.map((chord, i) => (
           <div key={i}>
             <p>{chord.chord}</p>
