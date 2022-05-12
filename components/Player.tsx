@@ -64,7 +64,7 @@ export default function Player({ bpm, data, loopEnd, intro, src }: playerInfo) {
       />
       <p>Current Chord: {chord}</p>
       <p>Notes in chord: {Chord.get(chord).notes}</p>
-      <Guitar notes={Chord.get(chord).notes} />
+      <Guitar notes={Chord.get(chord).notes} strings={5} frets={13} />
     </div>
   );
 }

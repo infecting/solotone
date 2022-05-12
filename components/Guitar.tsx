@@ -1,9 +1,17 @@
 import { Note } from "@tonaljs/tonal";
 import React from "react";
 
-export default function Guitar({ notes }: { notes: Array<string> }) {
-  var stringsNumber = 5;
+export default function Guitar({
+  notes,
+  frets,
+  strings,
+}: {
+  notes: Array<string>;
+  frets: number;
+  strings: number;
+}) {
   var intervals = [
+    "1P",
     "2m",
     "2M",
     "3m",
@@ -17,9 +25,10 @@ export default function Guitar({ notes }: { notes: Array<string> }) {
     "7M",
     "1P",
   ];
+  var tuning = ["E", "B", "G", "D", "A", "e"];
   function formatFret(fret: number, string: number) {
-    var tuning = ["E", "B", "G", "D", "A", "e"];
     var note = Note.simplify(Note.transpose(tuning[string], intervals[fret]));
+    console.log(fret, string, note);
     return note;
   }
 
@@ -35,66 +44,78 @@ export default function Guitar({ notes }: { notes: Array<string> }) {
     <div>
       <svg
         style={{
-          height: "150px",
+          height: "200px",
           marginLeft: "2em",
           marginTop: "1em",
-          width: "820px",
+          width: "950px",
         }}
       >
         {/* Nut */}
-        {<line x1="0" x2="0" y1="0" y2={200} stroke="#000" strokeWidth={5} />}
+        {
+          <line
+            x1="60"
+            x2="60"
+            y1="25"
+            y2={175}
+            stroke="#000"
+            strokeWidth={5}
+          />
+        }
 
         {/* Fret */}
 
-        {[...Array(12)].map((e, i) => (
+        {[...Array(frets)].map((e, i) => (
           <line
-            x1={(i + 1) * (820 / 12)}
-            x2={(i + 1) * (820 / 12)}
-            y1="0"
-            y2="200"
+            x1={(i + 1) * (820 / frets) + 60}
+            x2={(i + 1) * (820 / frets) + 60}
+            y1="25"
+            y2="175"
             stroke="#000"
           />
         ))}
 
         {/* Strings */}
-        {[...Array(stringsNumber + 1)].map((e, i) => (
+        {[...Array(strings + 1)].map((e, i) => (
           <line
-            x1="0"
-            y1={(150 / stringsNumber) * i}
-            x2="820"
-            y2={(150 / stringsNumber) * i}
+            x1="60"
+            y1={(150 / strings) * i + 25}
+            x2="920"
+            y2={(150 / strings) * i + 25}
             stroke="#000"
             strokeWidth="1"
           />
         ))}
 
         {/*  Note */}
-
-        {[...Array(12 * (stringsNumber + 1))].map((e, i) => (
+        {[...Array(frets * (strings + 1))].map((e, i) => (
           <g>
             <circle
               r="10"
-              cx={(820 / 12) * Math.floor(i % 12) + 820 / 24}
-              cy={Math.round(Math.floor(i / 12) * (150 / stringsNumber))}
-              fill={colorify(i % 12, Math.floor(i / 12))}
+              cx={
+                (820 / frets) * Math.floor(i % frets) - 820 / (frets * 2) + 60
+              }
+              cy={Math.round(Math.floor(i / frets) * (150 / strings)) + 25}
+              fill={colorify(i % frets, Math.floor(i / frets))}
               stroke="black"
             ></circle>
             <text
               fontSize="11"
-              x={(820 / 12) * Math.floor(i % 12) + 820 / 24}
-              y={Math.round(Math.floor(i / 12) * (150 / stringsNumber))}
+              x={(820 / frets) * Math.floor(i % frets) - 820 / (frets * 2) + 60}
+              y={Math.round(Math.floor(i / frets) * (150 / strings)) + 25}
               dominantBaseline="central"
               fill={
-                colorify(i % 12, Math.floor(i / 12)) == "black"
+                colorify(i % frets, Math.floor(i / frets)) == "black"
                   ? "white"
                   : "black"
               }
               fontWeight={
-                colorify(i % 12, Math.floor(i / 12)) == "black" ? "bold" : ""
+                colorify(i % frets, Math.floor(i / frets)) == "black"
+                  ? "bold"
+                  : ""
               }
               textAnchor="middle"
             >
-              {formatFret(i % 12, Math.floor(i / 12))}
+              {formatFret(i % frets, Math.floor(i / frets))}
             </text>
           </g>
         ))}
