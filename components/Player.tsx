@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { Chord } from "@tonaljs/tonal";
 import { TrackData } from "../types";
+import Guitar from "./Guitar";
 
 interface playerInfo {
   bpm: number;
   data: Array<TrackData>;
   loopEnd: number;
   intro: number;
+  src: string;
 }
 
-export default function Player({ bpm, data, loopEnd, intro }: playerInfo) {
-  const [isSSR, setIsSSR] = useState(true);
+export default function Player({ bpm, data, loopEnd, intro, src }: playerInfo) {
   const [currentSection, setCurrentSection] = useState(0);
   const [fileLength, setFileLength] = useState(0);
   const [chord, setChord] = useState("");
@@ -50,7 +51,6 @@ export default function Player({ bpm, data, loopEnd, intro }: playerInfo) {
 
   function handleLoadMetadata(e: any) {
     setFileLength(Math.floor(e.target.duration));
-    console.log(e.target.duration);
   }
 
   return (
@@ -60,10 +60,11 @@ export default function Player({ bpm, data, loopEnd, intro }: playerInfo) {
         onListen={(p) => getChord(p)}
         controls
         onLoadedMetadata={(e) => handleLoadMetadata(e)}
-        src={"/backing_one.mp4"}
+        src={src}
       />
       <p>Current Chord: {chord}</p>
       <p>Notes in chord: {Chord.get(chord).notes}</p>
+      <Guitar notes={Chord.get(chord).notes} />
     </div>
   );
 }
