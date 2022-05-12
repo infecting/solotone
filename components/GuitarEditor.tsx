@@ -14,7 +14,9 @@ export default function GuitarEditor({ notes }: { notes: Array<string> }) {
         onChange={(e) => setStringTuning(e.target.value.split(",").reverse())}
       >
         {data.tunings.map((tuning) => (
-          <option value={tuning.strings}>{tuning.name}</option>
+          <option key={tuning.name} value={tuning.strings}>
+            {tuning.name}
+          </option>
         ))}
       </select>
       <Guitar
