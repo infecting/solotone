@@ -28,7 +28,6 @@ export default function Guitar({
   var tuning = ["E", "B", "G", "D", "A", "e"];
   function formatFret(fret: number, string: number) {
     var note = Note.simplify(Note.transpose(tuning[string], intervals[fret]));
-    console.log(fret, string, note);
     return note;
   }
 
@@ -41,11 +40,10 @@ export default function Guitar({
   }
 
   return (
-    <div>
+    <div style={{ overflowX: "auto" }}>
       <svg
         style={{
           height: "200px",
-          marginLeft: "2em",
           marginTop: "1em",
           width: "950px",
         }}
@@ -64,7 +62,7 @@ export default function Guitar({
 
         {/* Fret */}
 
-        {[...Array(frets)].map((e, i) => (
+        {[...Array(frets - 1)].map((e, i) => (
           <line
             x1={(i + 1) * (820 / frets) + 60}
             x2={(i + 1) * (820 / frets) + 60}
@@ -79,7 +77,7 @@ export default function Guitar({
           <line
             x1="60"
             y1={(150 / strings) * i + 25}
-            x2="920"
+            x2="818"
             y2={(150 / strings) * i + 25}
             stroke="#000"
             strokeWidth="1"

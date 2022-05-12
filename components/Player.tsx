@@ -3,6 +3,7 @@ import ReactAudioPlayer from "react-audio-player";
 import { Chord } from "@tonaljs/tonal";
 import { TrackData } from "../types";
 import Guitar from "./Guitar";
+import ChordDisplay from "./ChordDisplay";
 
 interface playerInfo {
   bpm: number;
@@ -62,8 +63,7 @@ export default function Player({ bpm, data, loopEnd, intro, src }: playerInfo) {
         onLoadedMetadata={(e) => handleLoadMetadata(e)}
         src={src}
       />
-      <p>Current Chord: {chord}</p>
-      <p>Notes in chord: {Chord.get(chord).notes}</p>
+      <ChordDisplay chord={chord} />
       <Guitar notes={Chord.get(chord).notes} strings={5} frets={13} />
     </div>
   );
