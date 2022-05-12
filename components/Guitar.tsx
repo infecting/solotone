@@ -5,10 +5,12 @@ export default function Guitar({
   notes,
   frets,
   strings,
+  tuning,
 }: {
   notes: Array<string>;
   frets: number;
   strings: number;
+  tuning: Array<string>;
 }) {
   var intervals = [
     "1P",
@@ -25,7 +27,6 @@ export default function Guitar({
     "7M",
     "1P",
   ];
-  var tuning = ["E", "B", "G", "D", "A", "e"];
   function formatFret(fret: number, string: number) {
     var note = Note.simplify(Note.transpose(tuning[string], intervals[fret]));
     return note;

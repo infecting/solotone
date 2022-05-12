@@ -4,6 +4,7 @@ import { Chord } from "@tonaljs/tonal";
 import { TrackData } from "../types";
 import Guitar from "./Guitar";
 import ChordDisplay from "./ChordDisplay";
+import GuitarEditor from "./GuitarEditor";
 
 interface playerInfo {
   bpm: number;
@@ -64,7 +65,7 @@ export default function Player({ bpm, data, loopEnd, intro, src }: playerInfo) {
         src={src}
       />
       <ChordDisplay chord={chord} />
-      <Guitar notes={Chord.get(chord).notes} strings={5} frets={13} />
+      <GuitarEditor notes={Chord.get(chord).notes} />
     </div>
   );
 }
