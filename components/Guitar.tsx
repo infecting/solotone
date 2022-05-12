@@ -64,6 +64,7 @@ export default function Guitar({
 
         {[...Array(frets - 1)].map((e, i) => (
           <line
+            key={i}
             x1={(i + 1) * (820 / frets) + 60}
             x2={(i + 1) * (820 / frets) + 60}
             y1="25"
@@ -75,6 +76,7 @@ export default function Guitar({
         {/* Strings */}
         {[...Array(strings + 1)].map((e, i) => (
           <line
+            key={i}
             x1="60"
             y1={(150 / strings) * i + 25}
             x2="818"
@@ -86,7 +88,7 @@ export default function Guitar({
 
         {/*  Note */}
         {[...Array(frets * (strings + 1))].map((e, i) => (
-          <g>
+          <g key={i}>
             <circle
               r="10"
               cx={
