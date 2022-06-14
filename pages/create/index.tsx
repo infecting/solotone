@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { ChordType, Chord } from "@tonaljs/tonal";
+import { ChordType } from "@tonaljs/tonal";
 import { useState } from "react";
 import Player from "../../components/Player";
 import { TrackData } from "../../types";
@@ -131,7 +131,7 @@ const Create: NextPage = () => {
         )}
         {trackData[currentSection].chords.map((chord, i) => (
           <div key={i}>
-            <ChordDisplay chord={chord} />
+            <ChordDisplay chord={chord.chord} />
             <label htmlFor={i.toString()}>Chord starting beat</label>
             <input
               id="beat"

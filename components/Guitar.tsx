@@ -1,5 +1,6 @@
 import { Note } from "@tonaljs/tonal";
 import React from "react";
+import { makeSharp } from "../helper";
 
 export default function Guitar({
   notes,
@@ -27,8 +28,10 @@ export default function Guitar({
     "7M",
     "1P",
   ];
+
+  console.log(notes);
   function formatFret(fret: number, string: number) {
-    var note = Note.simplify(Note.transpose(tuning[string], intervals[fret]));
+    var note = makeSharp(Note.transpose(tuning[string], intervals[fret]));
     return note;
   }
 

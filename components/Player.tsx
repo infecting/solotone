@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { Chord } from "@tonaljs/tonal";
 import { TrackData } from "../types";
-import Guitar from "./Guitar";
 import ChordDisplay from "./ChordDisplay";
 import GuitarEditor from "./GuitarEditor";
 
@@ -19,7 +18,7 @@ export default function Player({ bpm, data, loopEnd, intro, src }: playerInfo) {
   const [fileLength, setFileLength] = useState(0);
   const [chord, setChord] = useState("");
   bpm = (60000 / bpm) * 0.001 * loopEnd;
-  function getChord(seconds: number) {
+  function getChord(seconds: any) {
     seconds = seconds - intro;
     try {
       var bars = Math.floor(Number(seconds / bpm) / 4);
