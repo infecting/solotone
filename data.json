@@ -34,5 +34,20 @@
             "name": "Bass Full Step Down",
             "strings": ["D", "G", "C", "F"]
         }
+    ],
+    "people": [
+        "Alex",
+       "Alec",
+        "Caleb",
+        "Lex",
+        "Sidney",
+       "Shobini",
+        "Erika",
+        "Libby",
+       "Catherine",
+       "Ethan",
+        "Will",
+        "Lila",
+        "Arsh"
     ]
 }

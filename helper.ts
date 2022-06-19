@@ -1,4 +1,5 @@
 import { Midi, Note } from "@tonaljs/tonal";
+import moment from 'moment'
 
 function beatToSecond(bpm: number): number {
     return (bpm / 60);
@@ -22,4 +23,14 @@ function makeSharps(notes: string[]) {
     return notes;
 }
 
-export {beatToSecond, scaleNotes, makeSharps, makeSharp};
+function getThisWeekDates() {
+    var weekDates= []; 
+  
+    for (var i = 0; i < 27 ; i++) {
+      weekDates.push(moment().day(i).toDate()); 
+    }
+  
+    return weekDates; 
+  }
+
+export {getThisWeekDates, beatToSecond, scaleNotes, makeSharps, makeSharp};
